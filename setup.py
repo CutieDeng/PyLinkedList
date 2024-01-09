@@ -1,12 +1,13 @@
 from setuptools import setup, Extension
 
 module0 = Extension('linked_list',
-      sources=['linked_list/pythonbind.cc'],
+      sources = ['linked_list/pythonbind.cc'], 
+      include_dirs = ['linked_list'],
       extra_compile_args=["-std=c++20"])  
 
 setup(
       name = 'linklist',
-      version = '1.0',
+      version = '1.4',
       description = 'Python package with a fast linked_list support. ',
       ext_modules = [module0],
       author = 'Cutie Deng',

@@ -171,7 +171,7 @@ namespace port {
 
 extern "C" {
 
-    PyMODINIT_FUNC PyInit_example() {
+    PyMODINIT_FUNC PyInit_linked_list() {
         // return PyModule_Create(&examplemodule); 
         PyObject *m; 
         port::LinkedListType.tp_new = PyType_GenericNew; 
