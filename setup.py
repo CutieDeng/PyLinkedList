@@ -7,7 +7,7 @@ module0 = Extension('linked_list',
 
 setup(
       name = 'linklist',
-      version = '1.4',
+      version = '1.6',
       description = 'Python package with a fast linked_list support. ',
       ext_modules = [module0],
       author = 'Cutie Deng',
@@ -19,5 +19,5 @@ setup(
             'License :: OSI Approved :: MIT License',
             'Operating System :: OS Independent',
       ],
-      python_requires = '>=3.10',
+      python_requires = '>=3.6',
 )

@@ -8,7 +8,6 @@ namespace order_statistic_tree {
     template <typename T> 
     struct WeightBalancedTree {
 
-        using size_t = size_t;  
         using DataType = T; 
 
         struct Node {
