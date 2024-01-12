@@ -1,5 +1,6 @@
 #pragma once 
 
+#include <assert.h> 
 #include <stddef.h>
 #include <type_traits>
 
@@ -178,6 +179,7 @@ namespace order_statistic_tree {
             *ret_val = node -> value;  
         }
         if (node -> son[0] != nullptr) {
+            assert(node -> son[1] == nullptr); 
             current = node -> son[0]; 
         } else {
             current = node -> son[1]; 
@@ -191,6 +193,7 @@ namespace order_statistic_tree {
             if (par -> son[0] == node) {
                 par -> son[0] = current; 
             } else {
+                assert (par -> son[1] == node); 
                 par -> son[1] = current; 
             }
             if (current != nullptr) {
@@ -200,6 +203,7 @@ namespace order_statistic_tree {
         current = par; 
         while (current != nullptr) {
             par = current -> parent; 
+            assert (current != par); 
             auto to_change = par == nullptr ? &tree -> root : (par -> son[0] == current ? &par -> son[0] : &par -> son[1]); 
             instantUpdateSize(tree, current); 
             auto limitation = current -> size / 4; 
@@ -214,6 +218,7 @@ namespace order_statistic_tree {
     }
 
     auto swap_without_value(auto tree, auto node, auto node2) {
+
         auto node_par = node -> parent; 
         auto node_par_link = node_par == nullptr ? &tree -> root : (node_par -> son[0] == node ? &node_par -> son[0] : &node_par -> son[1]); 
         auto node2_par = node2 -> parent; 
@@ -222,12 +227,26 @@ namespace order_statistic_tree {
         *node2_par_link = node; 
         node2 -> parent = node_par; 
         *node_par_link = node2; 
+
         auto node_sons0 = node -> son[0]; 
         auto node_sons1 = node -> son[1]; 
         node -> son[0] = node2 -> son[0]; 
         node -> son[1] = node2 -> son[1]; 
         node2 -> son[0] = node_sons0; 
         node2 -> son[1] = node_sons1; 
+        if (node -> son[0] != nullptr) {
+            node -> son[0] -> parent = node; 
+        } 
+        if (node -> son[1] != nullptr) {
+            node -> son[1] -> parent = node; 
+        }
+        if (node2 -> son[0] != nullptr) {
+            node2 -> son[0] -> parent = node2; 
+        }
+        if (node2 -> son[1] != nullptr) {
+            node2 -> son[1] -> parent = node2; 
+        }
+
         auto s = node -> size; 
         node -> size = node2 -> size; 
         node2 -> size = s; 
@@ -276,6 +295,25 @@ namespace order_statistic_tree {
 
     auto destroy(auto tree, auto deleter) {
         destroy_impl(tree->root, deleter); 
+    }
+
+    auto assert_impl(auto tree, auto node) {
+        if (node == nullptr) {
+            return ; 
+        }
+        assert (node -> son[0] == nullptr || node -> son[0] != node -> son[1]); 
+        assert_impl(tree, node -> son[0]);
+        assert_impl(tree, node -> son[1]);
+        auto old_size = node -> size;
+        instantUpdateSize(tree, node); 
+        assert (old_size == node -> size); 
+        assert (node -> son[0] == nullptr || node -> son[0] -> parent == node);
+        assert (node -> son[1] == nullptr || node -> son[1] -> parent == node); 
+        return ; 
+    }
+
+    auto assert_all (auto tree) {
+        assert_impl(tree, tree->root); 
     }
 
 }

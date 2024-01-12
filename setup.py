@@ -15,7 +15,7 @@ module0 = Extension('linked_list',
 
 setup(
       name = 'linklist',
-      version = '1.7',
+      version = '2.0', 
       description = 'Python package with a fast linked_list support. ',
       ext_modules = [module0],
       author = 'Cutie Deng',
