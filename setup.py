@@ -1,4 +1,4 @@
-from setuptools import setup, Extension
+from setuptools import setup, Extension, find_packages
 import os 
 
 name = os.name 
@@ -15,7 +15,7 @@ module0 = Extension('linked_list',
 
 setup(
       name = 'linklist',
-      version = '2.0', 
+      version = '2.1', 
       description = 'Python package with a fast linked_list support. ',
       ext_modules = [module0],
       author = 'Cutie Deng',
@@ -28,5 +28,6 @@ setup(
             'Operating System :: OS Independent',
       ],
       python_requires = '>=3.6',
-      py_modules=['fastlist'], 
+      # py_modules=['fastlist'], 
+      packages= find_packages(),
 )
