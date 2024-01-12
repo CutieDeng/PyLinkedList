@@ -1,8 +1,7 @@
 import linked_list 
 import copy 
 
-class List0: 
-
+class List: 
     def __init__(self): 
         self.innerImpl = linked_list.linked_list() 
     
@@ -46,7 +45,7 @@ class List0:
         return self 
     
     def __copy__(self): 
-        ans = List0() 
+        ans = List() 
         for i in self: 
             ans.append(i) 
         return ans
@@ -76,13 +75,13 @@ class List0:
                 raise StopIteration 
     
     def __iter__(self): 
-        return List0.Iter(self)
+        return List.Iter(self)
 
     def extend(self, other): 
         self += other 
     
     def reverse(self): 
-        new = List0() 
+        new = List() 
         for i in reversed(self): 
             new.append(i) 
         del self.innerImpl 
@@ -130,14 +129,4 @@ class List0:
     
     def copy(self): 
         return copy.copy(self)
-
-if __name__ == '__main__': 
-    l = List0() 
-    l.append(1)
-    l += "Hello World" 
-    l.reverse()
-    print (l)
-    l.remove('e')
-    l.insert(0, 'a')
-    l.insert(3, 'a')
-    print (l)
+    
